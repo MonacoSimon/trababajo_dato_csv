@@ -74,6 +74,29 @@ class Arbol:
                 print(nodo.dato.country)
             # print(nodo.dato.name)
             self._mostrar_rec(nodo.derecha, criterio)
+            
+    def filtrar(self, criterio):
+        # print(criterio)
+        self.filtrar(self.raiz, criterio)
+
+    def filtrar(self, nodo, criterio):
+        filtro = []
+        if nodo is not None:
+            self.filtrar(nodo.izquierda, criterio)
+            if criterio == "nombre":
+                # print(nodo.dato.name)
+                filtro.append(nodo.dato.name)
+            elif criterio == "email":
+                # print(nodo.dato.email)
+                filtro.append(nodo.dato.name)
+
+            else:
+                # print(nodo.dato.country)
+                filtro.append(nodo.dato.name)
+
+            # print(nodo.dato.name)
+            self.filtrar(nodo.derecha, criterio)
+        return filtro
 
 def crear_persona(ruta_archivo):
         personas = []
@@ -100,18 +123,23 @@ personas = crear_persona('/home/maquina6/Escritorio/Practica3/Tp_final_ayed3_/da
 criterio = input("escriba un criterio de orden para el arbol, puede ser por nombre, email o pais: ")
 
 def escribir_nuevo_csv(csv):
-    csv = insertar_personas(personas)
-    with open('ordenado.csv', 'w', newline='') as archivo_csv:
-        datos = [
-            csv.datos
-        ]
-        escritor_csv = csv.writer(archivo_csv)
-        for fila in datos:
-            escritor_csv.writerow(fila)
+    a = Arbol()
+    personas = crear_persona('/home/maquina6/Escritorio/Practica3/Tp_final_ayed3_/data.csv')
+    b = insertar_personas(personas)
+    b.filtrar(criterio)
+    # csv = insertar_personas(personas)
+    # with open('ordenado.csv', 'w', newline='') as archivo_csv:
+    #     datos = [
+    #         csv.datos
+    #     ]
+    #     escritor_csv = csv.writer(archivo_csv)
+    #     for fila in datos:
+    #         escritor_csv.writerow(fila)
     
 
 a = Arbol()
 b = insertar_personas(personas)
 b.mostrar(criterio)
+b.filtrar(criterio)
 
 
